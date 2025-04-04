@@ -9,6 +9,9 @@ export const Posts: CollectionConfig = {
   access: {
     // Allow everyone to read posts—adjust as needed.
     read: () => true,
+    create: () => true,
+    update: () => true,
+    delete: () => true,
   },
   fields: [
     {
