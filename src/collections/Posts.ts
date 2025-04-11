@@ -1,10 +1,13 @@
 // src/collections/Posts.ts
 import { CollectionConfig } from 'payload';
-import { lexicalEditor } from '@payloadcms/richtext-lexical';
+import { lexicalEditor, LinkFeature} from '@payloadcms/richtext-lexical';
 export const Posts: CollectionConfig = {
   slug: 'posts',
   admin: {
     useAsTitle: 'title',
+    enableRichTextLink: true,
+    enableRichTextRelationship: true,
+
   },
   access: {
     // Allow everyone to read posts—adjust as needed.
@@ -36,7 +39,15 @@ export const Posts: CollectionConfig = {
     {
       name: 'content',
       type: 'richText',
-      editor: lexicalEditor(),
+      editor: lexicalEditor({
+        features: ({ defaultFeatures }) => [
+          ...defaultFeatures,
+          LinkFeature({
+            // Specify collections for internal linking if needed
+            enabledCollections: ['posts'],
+          }),
+        ],
+      }),
       required: true,
     },
     {
